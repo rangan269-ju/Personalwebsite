@@ -18,6 +18,40 @@ document.querySelectorAll('.mobile-nav a').forEach((link) => {
 document.querySelector('#year').textContent = new Date().getFullYear();
 document.querySelector('.progress-footer span:last-child')?.remove();
 
+const denseCodingProject = document.querySelector('.dense-coding-project');
+if (denseCodingProject) {
+  denseCodingProject.querySelector('.project-timeline').textContent = 'May-August 2026';
+  denseCodingProject.querySelectorAll('p').forEach((paragraph) => {
+    if (paragraph.textContent.trim() === 'Study of dense coding protocols using bipartite and multipartite entangled states.') {
+      paragraph.remove();
+    }
+  });
+  const projectDetails = [
+    { text: 'Supervisor: Dr. Kuntal Roy' },
+    { text: 'Indian Institute of Science Education & Research Bhopal' },
+    { text: 'IISERB Summer Internship Program 2026', href: 'https://www.iiserb.ac.in/doaa/internship' },
+  ];
+  const projectLinks = denseCodingProject.querySelector('.project-links');
+  projectDetails.forEach((detail) => {
+    const paragraph = document.createElement('p');
+    if (detail.href) {
+      const link = document.createElement('a');
+      const arrow = document.createElement('span');
+      link.href = detail.href;
+      link.className = 'internship-detail-link';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = detail.text;
+      arrow.textContent = '↗';
+      link.append(arrow);
+      paragraph.append(link);
+    } else {
+      paragraph.textContent = detail.text;
+    }
+    denseCodingProject.insertBefore(paragraph, projectLinks);
+  });
+}
+
 const graduationStart = new Date(2023, 7, 1);
 const graduationEnd = new Date(2027, 7, 1);
 const graduationPercentage = document.querySelector('#graduation-percentage');
