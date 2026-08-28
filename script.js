@@ -49,6 +49,12 @@ if (projectGrid) {
   const cernSchool = document.createElement('li');
   cernSchool.textContent = 'CERN-MPQ-UIBK School on Quantum Simulation of Fundamental Physics, 17 August to 4 September 2026';
   workshopList.prepend(cernSchool);
+  workshopCard.querySelectorAll('.workshop-list a').forEach((link) => {
+    const arrow = document.createElement('span');
+    arrow.textContent = '↗';
+    link.textContent = link.textContent.replace(' ↗', '');
+    link.append(arrow);
+  });
   workshopHeading.after(workshopCard);
 }
 document.querySelectorAll('.internship-project').forEach((card) => {
