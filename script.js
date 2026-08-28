@@ -18,6 +18,25 @@ document.querySelectorAll('.mobile-nav a').forEach((link) => {
 document.querySelector('#year').textContent = new Date().getFullYear();
 document.querySelector('.progress-footer span:last-child')?.remove();
 
+const firstInternship = document.querySelector('.internship-project:not(.dense-coding-project)');
+const fellowshipLink = firstInternship?.querySelector('.fellowship-link');
+document.querySelectorAll('.internship-project').forEach((card) => {
+  const label = document.createElement('span');
+  label.className = 'internship-label';
+  label.textContent = 'A Project Internship on';
+  card.append(label);
+});
+const fellowshipParagraph = fellowshipLink?.parentElement;
+if (fellowshipLink && fellowshipParagraph) {
+  const fellowshipLabel = fellowshipParagraph.firstChild?.textContent.trim();
+  fellowshipParagraph.textContent = '';
+  fellowshipLink.textContent = '';
+  const arrow = document.createElement('span');
+  arrow.textContent = '↗';
+  fellowshipLink.append(arrow, fellowshipLabel);
+  fellowshipParagraph.append(fellowshipLink);
+}
+
 const denseCodingProject = document.querySelector('.dense-coding-project');
 if (denseCodingProject) {
   denseCodingProject.querySelector('.project-timeline').textContent = 'May-August 2026';
@@ -43,12 +62,33 @@ if (denseCodingProject) {
       link.rel = 'noopener noreferrer';
       link.textContent = detail.text;
       arrow.textContent = '↗';
-      link.append(arrow);
+      link.prepend(arrow);
       paragraph.append(link);
     } else {
       paragraph.textContent = detail.text;
     }
     denseCodingProject.insertBefore(paragraph, projectLinks);
+  });
+  projectLinks.innerHTML = '';
+  [
+    { text: 'ResearchGate / DOI:', href: 'https://doi.org/10.13140/RG.2.2.36663.69287', doi: '10.13140/RG.2.2.36663.69287' },
+    { text: 'Abstract', href: 'https://drive.google.com/' },
+  ].forEach((resource) => {
+    const link = document.createElement('a');
+    const arrow = document.createElement('span');
+    link.href = resource.href;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = resource.text;
+    if (resource.doi) {
+      const doiNumber = document.createElement('span');
+      doiNumber.className = 'doi-number';
+      doiNumber.textContent = resource.doi;
+      link.append(doiNumber);
+    }
+    arrow.textContent = '↗';
+    link.prepend(arrow);
+    projectLinks.append(link);
   });
 }
 
