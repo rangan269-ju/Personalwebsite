@@ -1,5 +1,35 @@
 const menuButton = document.querySelector('.menu-toggle');
 const mobileNav = document.querySelector('.mobile-nav');
+const pageViews = {
+  home: ['.hero', '.marquee'],
+  education: ['#education'],
+  experience: ['.work'],
+  gallery: ['#gallery'],
+  qualification: ['#qualification'],
+  publication: ['#publication'],
+  contact: ['.contact'],
+};
+const requestedPage = new URLSearchParams(window.location.search).get('page') || 'home';
+const currentPage = Object.prototype.hasOwnProperty.call(pageViews, requestedPage) ? requestedPage : 'home';
+const visibleViews = pageViews[currentPage];
+const profileViews = ['#education', '.work', '#qualification', '#publication'];
+
+document.querySelector('.hero').hidden = !visibleViews.includes('.hero');
+document.querySelector('.marquee').hidden = !visibleViews.includes('.marquee');
+document.querySelector('.contact').hidden = !visibleViews.includes('.contact');
+document.querySelector('#gallery').hidden = !visibleViews.includes('#gallery');
+document.querySelectorAll('.profile-item, .work').forEach((section) => {
+  const viewId = section.matches('.work') ? '.work' : `#${section.id}`;
+  section.hidden = !visibleViews.includes(viewId);
+});
+document.querySelector('.profile-section').hidden = !profileViews.some((view) => visibleViews.includes(view));
+document.title = `${currentPage[0].toUpperCase()}${currentPage.slice(1)} | Rangan Chakrabarty`;
+
+document.querySelectorAll('.desktop-nav a, .mobile-nav a').forEach((link) => {
+  if (new URL(link.href).searchParams.get('page') === currentPage) {
+    link.setAttribute('aria-current', 'page');
+  }
+});
 
 menuButton.addEventListener('click', () => {
   const isOpen = mobileNav.classList.toggle('open');
@@ -15,6 +45,91 @@ document.querySelectorAll('.mobile-nav a').forEach((link) => {
   });
 });
 
+const heroVisual = document.querySelector('.hero-visual');
+if (heroVisual && currentPage === 'home') {
+  const heroCaption = heroVisual.querySelector('.visual-caption');
+  const heroLabel = heroVisual.querySelector('.visual-label');
+  const heroSlides = [
+    {
+      image: 'pictures/1791971786015.jpeg',
+      caption: 'Durga Pujo 2026',
+      position: 'center 36%',
+      size: 'cover',
+      captionTone: 'dark',
+    },
+    {
+      image: 'pictures/1791310894099.jpeg',
+      caption: 'Sammanoy (Reunion), Dept of Physics, JU, 2026',
+      position: 'center center',
+      size: 'contain',
+    },
+    {
+      image: 'pictures/IMG_7204.jpeg',
+      caption: 'At SISDSA 2026 seminar, Jadavpur University.',
+      position: 'center center',
+      size: 'cover',
+    },
+  ];
+  let activeHeroSlide = 0;
+
+  window.setInterval(() => {
+    activeHeroSlide = (activeHeroSlide + 1) % heroSlides.length;
+    const slide = heroSlides[activeHeroSlide];
+    heroVisual.style.backgroundImage = `url("${slide.image}")`;
+    heroVisual.style.backgroundPosition = slide.position;
+    heroVisual.style.backgroundSize = slide.size;
+    heroVisual.style.backgroundRepeat = 'no-repeat';
+    heroVisual.setAttribute('aria-label', slide.caption);
+    heroCaption.textContent = slide.caption;
+    heroCaption.classList.toggle('visual-caption-dark', slide.captionTone === 'dark');
+    heroLabel.textContent = `${String(activeHeroSlide + 1).padStart(2, '0')} / ${String(heroSlides.length).padStart(2, '0')}`;
+    heroVisual.classList.add('is-changing');
+    window.setTimeout(() => heroVisual.classList.remove('is-changing'), 700);
+  }, 5500);
+}
+
+const researchDiaryVisual = document.querySelector('.research-diary-visual');
+if (researchDiaryVisual && currentPage === 'gallery') {
+  const diaryImage = researchDiaryVisual.querySelector('img');
+  const diaryCaption = researchDiaryVisual.querySelector('.visual-caption');
+  const diaryLabel = researchDiaryVisual.querySelector('.visual-label');
+  const diarySlides = [
+    {
+      image: 'pictures/IMG_20250715_173808297.jpg',
+      caption: 'Bose Institute, Kolkata',
+      alt: 'Bose Institute, Kolkata',
+    },
+    {
+      image: 'pictures/IMG_20250707_175814160.jpg',
+      caption: 'Bose Institute, Kolkata',
+      alt: 'Bose Institute, Kolkata',
+    },
+    {
+      image: 'pictures/IMG_20250710_144858401.jpg',
+      caption: 'My Desk at Bose Institute',
+      alt: 'Research desk at Bose Institute',
+    },
+    {
+      image: 'pictures/images.jpg',
+      caption: 'IISER Bhopal',
+      alt: 'IISER Bhopal campus',
+    },
+  ];
+  let activeDiarySlide = 0;
+
+  window.setInterval(() => {
+    activeDiarySlide = (activeDiarySlide + 1) % diarySlides.length;
+    const slide = diarySlides[activeDiarySlide];
+    diaryImage.src = slide.image;
+    diaryImage.alt = slide.alt;
+    diaryCaption.textContent = slide.caption;
+    diaryLabel.textContent = `${String(activeDiarySlide + 1).padStart(2, '0')} / ${String(diarySlides.length).padStart(2, '0')}`;
+    researchDiaryVisual.setAttribute('aria-label', slide.caption);
+    researchDiaryVisual.classList.add('is-changing');
+    window.setTimeout(() => researchDiaryVisual.classList.remove('is-changing'), 700);
+  }, 5500);
+}
+
 document.querySelector('#year').textContent = new Date().getFullYear();
 document.querySelector('.progress-footer span:last-child')?.remove();
 
@@ -23,6 +138,15 @@ const fellowshipLink = firstInternship?.querySelector('.fellowship-link');
 const firstAbstractLink = firstInternship?.querySelector('.project-links a:last-child');
 if (firstAbstractLink) {
   firstAbstractLink.href = 'https://drive.google.com/uc?export=download&id=1TAzVu03wXdVtlFovLBMcXA1WIsv2ABNn';
+}
+if (firstInternship) {
+  const figure = document.createElement('figure');
+  const image = document.createElement('img');
+  figure.className = 'dense-coding-figure first-internship-figure';
+  image.src = 'pictures/entanglement%20cityscape.png';
+  image.alt = 'Quantum statevector city plot showing real and imaginary amplitudes';
+  figure.append(image);
+  firstInternship.querySelector('.project-links')?.after(figure);
 }
 const projectGrid = document.querySelector('.work .project-entry-grid');
 if (projectGrid) {
@@ -125,6 +249,28 @@ if (denseCodingProject) {
     link.prepend(arrow);
     projectLinks.append(link);
   });
+
+  const gallery = document.createElement('div');
+  gallery.className = 'dense-coding-gallery';
+  [
+    {
+      src: 'pictures/6cluster%20bitphase%20flip%20ckt.png',
+      alt: 'Six-qubit circuit diagram for a bit-phase flip quantum communication protocol',
+    },
+    {
+      src: 'pictures/orthogonality%20graph%2064.png',
+      alt: '64-node orthogonality graph with densely connected vertices',
+    },
+  ].forEach((imageDetails) => {
+    const figure = document.createElement('figure');
+    const image = document.createElement('img');
+    figure.className = 'dense-coding-figure';
+    image.src = imageDetails.src;
+    image.alt = imageDetails.alt;
+    figure.append(image);
+    gallery.append(figure);
+  });
+  denseCodingProject.append(gallery);
 }
 
 const graduationStart = new Date(2023, 7, 1);
