@@ -85,49 +85,63 @@ if (heroVisual && currentPage === 'home') {
     heroLabel.textContent = `${String(activeHeroSlide + 1).padStart(2, '0')} / ${String(heroSlides.length).padStart(2, '0')}`;
     heroVisual.classList.add('is-changing');
     window.setTimeout(() => heroVisual.classList.remove('is-changing'), 700);
-  }, 5500);
+  }, 4500);
 }
 
-const researchDiaryVisual = document.querySelector('.research-diary-visual');
-if (researchDiaryVisual && currentPage === 'gallery') {
-  const diaryImage = researchDiaryVisual.querySelector('img');
-  const diaryCaption = researchDiaryVisual.querySelector('.visual-caption');
-  const diaryLabel = researchDiaryVisual.querySelector('.visual-label');
-  const diarySlides = [
-    {
-      image: 'pictures/IMG_20250715_173808297.jpg',
-      caption: 'Bose Institute, Kolkata',
-      alt: 'Bose Institute, Kolkata',
-    },
-    {
-      image: 'pictures/IMG_20250707_175814160.jpg',
-      caption: 'Bose Institute, Kolkata',
-      alt: 'Bose Institute, Kolkata',
-    },
-    {
-      image: 'pictures/IMG_20250710_144858401.jpg',
-      caption: 'My Desk at Bose Institute',
-      alt: 'Research desk at Bose Institute',
-    },
-    {
-      image: 'pictures/images.jpg',
-      caption: 'IISER Bhopal',
-      alt: 'IISER Bhopal campus',
-    },
-  ];
-  let activeDiarySlide = 0;
+function setupGalleryCarousel(visual, slides) {
+  const image = visual.querySelector('img');
+  const caption = visual.querySelector('.visual-caption');
+  const label = visual.querySelector('.visual-label');
+  let activeSlide = 0;
 
   window.setInterval(() => {
-    activeDiarySlide = (activeDiarySlide + 1) % diarySlides.length;
-    const slide = diarySlides[activeDiarySlide];
-    diaryImage.src = slide.image;
-    diaryImage.alt = slide.alt;
-    diaryCaption.textContent = slide.caption;
-    diaryLabel.textContent = `${String(activeDiarySlide + 1).padStart(2, '0')} / ${String(diarySlides.length).padStart(2, '0')}`;
-    researchDiaryVisual.setAttribute('aria-label', slide.caption);
-    researchDiaryVisual.classList.add('is-changing');
-    window.setTimeout(() => researchDiaryVisual.classList.remove('is-changing'), 700);
-  }, 5500);
+    activeSlide = (activeSlide + 1) % slides.length;
+    const slide = slides[activeSlide];
+    image.src = slide.image;
+    image.alt = slide.alt;
+    caption.textContent = slide.caption;
+    label.textContent = `${String(activeSlide + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    visual.setAttribute('aria-label', slide.caption);
+    visual.classList.toggle('show-full-image', Boolean(slide.fullImage));
+    visual.classList.add('is-changing');
+    window.setTimeout(() => visual.classList.remove('is-changing'), 700);
+  }, 4500);
+}
+
+if (currentPage === 'gallery') {
+  const researchDiaryVisual = document.querySelector('.research-diary-visual');
+  if (researchDiaryVisual) {
+    setupGalleryCarousel(researchDiaryVisual, [
+      { image: 'pictures/IMG_20250715_173808297.jpg', caption: 'Bose Institute, Kolkata', alt: 'Bose Institute, Kolkata' },
+      { image: 'pictures/IMG_20250707_175814160.jpg', caption: 'Bose Institute, Kolkata', alt: 'Bose Institute, Kolkata' },
+      { image: 'pictures/IMG_20250710_144858401.jpg', caption: 'My Desk at Bose Institute', alt: 'Research desk at Bose Institute' },
+      { image: 'pictures/images.jpg', caption: 'IISER Bhopal', alt: 'IISER Bhopal campus', fullImage: true },
+    ]);
+  }
+
+  const attendedEventsVisual = document.querySelector('.attended-events-visual');
+  if (attendedEventsVisual) {
+    setupGalleryCarousel(attendedEventsVisual, [
+      { image: 'pictures/IMG_20260201_142143011.jpg', caption: 'IIT KGP Research Park', alt: 'IIT KGP Research Park' },
+      { image: 'pictures/IMG_20260201_125640406.jpg', caption: 'IIT KGP Research Park', alt: 'IIT KGP Research Park' },
+      { image: 'pictures/IMG_20260201_110614775.jpg', caption: 'IIT KGP Research Park', alt: 'IIT KGP Research Park' },
+      { image: 'pictures/IMG_20260120_123700813.jpg', caption: 'TCG Crest Centre, Kolkata', alt: 'TCG Crest Centre, Kolkata', fullImage: true },
+      { image: 'pictures/IMG_20260414_184638042.jpg', caption: 'TCG Crest Centre, Kolkata', alt: 'TCG Crest Centre, Kolkata' },
+      { image: 'pictures/IMG_20260307_101132220.jpg', caption: 'International Workshop on Nanophotonics, City Centre 2, Kolkata', alt: 'International Workshop on Nanophotonics at City Centre 2, Kolkata' },
+      { image: 'pictures/IMG-20260307-WA0007.jpg', caption: 'International Workshop on Nanophotonics, City Centre 2, Kolkata', alt: 'International Workshop on Nanophotonics at City Centre 2, Kolkata' },
+    ]);
+  }
+
+  const varsityDiaryVisual = document.querySelector('.varsity-diary-visual');
+  if (varsityDiaryVisual) {
+    setupGalleryCarousel(varsityDiaryVisual, [
+      { image: 'pictures/img-52.jpeg', caption: 'Samannoy 2026', alt: 'Samannoy 2026' },
+      { image: 'pictures/IMG-20260313-WA0012.jpg', caption: 'Funtime :)', alt: 'Fun moment at university' },
+      { image: 'pictures/IMG-20260318-WA0015.jpg', caption: 'Did something Great anyway :)', alt: 'A memorable university moment' },
+      { image: 'pictures/IMG-20260318-WA0045.jpg', caption: 'With Prof. Sinha, RRI Bangalore', alt: 'With Professor Sinha at RRI Bangalore' },
+      { image: 'pictures/IMG_20260314_194456421.jpg', caption: 'Night life @JU', alt: 'Nightlife at Jadavpur University' },
+    ]);
+  }
 }
 
 document.querySelector('#year').textContent = new Date().getFullYear();
