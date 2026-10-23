@@ -1,7 +1,7 @@
 const menuButton = document.querySelector('.menu-toggle');
 const mobileNav = document.querySelector('.mobile-nav');
 const pageViews = {
-  home: ['.hero', '.marquee'],
+  home: ['.hero', '.marquee', '.news'],
   education: ['#education'],
   experience: ['.work'],
   gallery: ['#gallery'],
@@ -16,6 +16,7 @@ const profileViews = ['#education', '.work', '#qualification', '#publication'];
 
 document.querySelector('.hero').hidden = !visibleViews.includes('.hero');
 document.querySelector('.marquee').hidden = !visibleViews.includes('.marquee');
+document.querySelector('.news').hidden = !visibleViews.includes('.news');
 document.querySelector('.contact').hidden = !visibleViews.includes('.contact');
 document.querySelector('#gallery').hidden = !visibleViews.includes('#gallery');
 document.querySelectorAll('.profile-item, .work').forEach((section) => {
@@ -25,7 +26,7 @@ document.querySelectorAll('.profile-item, .work').forEach((section) => {
 document.querySelector('.profile-section').hidden = !profileViews.some((view) => visibleViews.includes(view));
 document.title = `${currentPage[0].toUpperCase()}${currentPage.slice(1)} | Rangan Chakrabarty`;
 
-document.querySelectorAll('.desktop-nav a, .mobile-nav a').forEach((link) => {
+document.querySelectorAll('.desktop-nav a, .mobile-nav a, .page-explorer-links a').forEach((link) => {
   if (new URL(link.href).searchParams.get('page') === currentPage) {
     link.setAttribute('aria-current', 'page');
   }
