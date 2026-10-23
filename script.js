@@ -26,7 +26,7 @@ document.querySelectorAll('.profile-item, .work').forEach((section) => {
 document.querySelector('.profile-section').hidden = !profileViews.some((view) => visibleViews.includes(view));
 document.title = `${currentPage[0].toUpperCase()}${currentPage.slice(1)} | Rangan Chakrabarty`;
 
-document.querySelectorAll('.desktop-nav a, .mobile-nav a, .page-explorer-links a').forEach((link) => {
+document.querySelectorAll('.desktop-nav a, .mobile-nav a').forEach((link) => {
   if (new URL(link.href).searchParams.get('page') === currentPage) {
     link.setAttribute('aria-current', 'page');
   }
