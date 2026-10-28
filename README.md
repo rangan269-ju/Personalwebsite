@@ -1,19 +1,7 @@
-# Rangan J. — Personal portfolio
+Rangan Chakrabarty | Personal Website
 
-A lightweight, responsive portfolio built with plain HTML, CSS, and JavaScript.
+Welcome to my personal academic portfolio, showcasing my academic journey, research projects, publications, experiences, and achievements. Currently I'm a Physics undergraduate at Jadavpur University, Kolkata, with research interests in **Quantum Communication, Quantum Information Theory, and Quantum State Transfer**.
 
-## Run locally
+Built using **HTML, CSS, and JavaScript**, and hosted on **GitHub Pages**, this website serves as a platform to share my academic profile, research contributions, and professional interests.
 
-From this folder, run:
-
-```bash
-python3 -m http.server 4173
-```
-
-Then open <http://localhost:4173>.
-
-## Personalize
-
-- Update the name, intro, project titles, and email in `index.html`.
-- Replace the Unsplash URL in `styles.css` with a photo or image that represents you.
-- Adjust the colors in the `:root` variables at the top of `styles.css`.
+🌐 **Website:** [Visit My Portfolio](https://rangan269-ju.github.io/Personalwebsite/) | 💻 **Repository:** [GitHub](https://github.com/rangan269-ju/Personalwebsite)
