@@ -227,7 +227,7 @@ if (fellowshipLink && fellowshipParagraph) {
   const selectedFellowsLink = document.createElement('a');
   const selectedFellowsArrow = document.createElement('span');
   selectedFellowsLink.className = 'fellowship-link';
-  selectedFellowsLink.href = 'https://webjapps.ias.ac.in/fellowship2025/lists/selectedList.jsp';
+  selectedFellowsLink.href = 'https://webjapps.ias.ac.in/fellowship2025/lists/result.jsp';
   selectedFellowsLink.target = '_blank';
   selectedFellowsLink.rel = 'noopener noreferrer';
   selectedFellowsLink.textContent = '2025 selected fellows list';
