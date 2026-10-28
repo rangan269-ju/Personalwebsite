@@ -155,13 +155,27 @@ if (firstAbstractLink) {
   firstAbstractLink.href = 'https://drive.google.com/uc?export=download&id=1TAzVu03wXdVtlFovLBMcXA1WIsv2ABNn';
 }
 if (firstInternship) {
-  const figure = document.createElement('figure');
-  const image = document.createElement('img');
-  figure.className = 'dense-coding-figure first-internship-figure';
-  image.src = 'pictures/entanglement%20cityscape.png';
-  image.alt = 'Quantum statevector city plot showing real and imaginary amplitudes';
-  figure.append(image);
-  firstInternship.querySelector('.project-links')?.after(figure);
+  const gallery = document.createElement('div');
+  gallery.className = 'dense-coding-gallery first-internship-gallery';
+  [
+    {
+      src: 'pictures/heatmap%20faulty.png',
+      alt: 'Heatmap of faulty quantum gate results',
+    },
+    {
+      src: 'pictures/ibmqcstabo4.png',
+      alt: 'IBM Quantum Composer circuit and results',
+    },
+  ].forEach((imageDetails) => {
+    const figure = document.createElement('figure');
+    const image = document.createElement('img');
+    figure.className = 'dense-coding-figure';
+    image.src = imageDetails.src;
+    image.alt = imageDetails.alt;
+    figure.append(image);
+    gallery.append(figure);
+  });
+  firstInternship.querySelector('.project-links')?.after(gallery);
 }
 const projectGrid = document.querySelector('.work .project-entry-grid');
 if (projectGrid) {
@@ -209,6 +223,17 @@ if (fellowshipLink && fellowshipParagraph) {
   arrow.textContent = '↗';
   fellowshipLink.append(arrow, fellowshipLabel);
   fellowshipParagraph.append(fellowshipLink);
+
+  const selectedFellowsLink = document.createElement('a');
+  const selectedFellowsArrow = document.createElement('span');
+  selectedFellowsLink.className = 'fellowship-link';
+  selectedFellowsLink.href = 'https://webjapps.ias.ac.in/fellowship2025/lists/selectedList.jsp';
+  selectedFellowsLink.target = '_blank';
+  selectedFellowsLink.rel = 'noopener noreferrer';
+  selectedFellowsLink.textContent = '2025 selected fellows list';
+  selectedFellowsArrow.textContent = '↗';
+  selectedFellowsLink.prepend(selectedFellowsArrow);
+  fellowshipParagraph.append(' ', selectedFellowsLink);
 }
 
 const denseCodingProject = document.querySelector('.dense-coding-project');

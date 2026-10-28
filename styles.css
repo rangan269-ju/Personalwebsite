@@ -226,6 +226,7 @@ a { color: inherit; text-decoration: none; }
 .dense-coding-figure:last-child img { transform: scale(1.22); }
 .first-internship-figure { width: min(100%, 340px); justify-self: center; margin-top: 18px; }
 .first-internship-figure img { aspect-ratio: auto; object-fit: contain; }
+.first-internship-gallery .dense-coding-figure img { aspect-ratio: auto; object-fit: contain; transform: none; }
 @media (max-width: 420px) { .dense-coding-gallery { grid-template-columns: 1fr; } .dense-coding-figure:first-child, .dense-coding-figure:last-child { width: min(100%, 300px); justify-self: center; } }
 @media (prefers-reduced-motion: reduce) { .hero-visual.is-changing { animation: none; } }
 
