@@ -138,8 +138,8 @@ if (currentPage === 'gallery') {
     setupGalleryCarousel(varsityDiaryVisual, [
       { image: 'pictures/img-52.jpeg', caption: 'Samannoy 2026', alt: 'Samannoy 2026' },
       { image: 'pictures/IMG-20260313-WA0012.jpg', caption: 'Funtime :)', alt: 'Fun moment at university' },
-      { image: 'pictures/IMG-20260318-WA0015.jpg', caption: 'Did something Great anyway :)', alt: 'A memorable university moment' },
-      { image: 'pictures/IMG-20260318-WA0045.jpg', caption: 'With Prof. Sinha, RRI Bangalore', alt: 'With Professor Sinha at RRI Bangalore' },
+      { image: 'pictures/IMG-20260119-WA0026.jpeg', caption: 'After an exciting Project-viva session', alt: 'Students after an exciting project viva session' },
+      { image: 'pictures/IMG_7204.JPG', caption: 'After a successful poster presentation', alt: 'After a successful poster presentation', fullImage: true },
       { image: 'pictures/IMG_20260314_194456421.jpg', caption: 'Night life @JU', alt: 'Nightlife at Jadavpur University' },
     ]);
   }
