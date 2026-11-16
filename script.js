@@ -65,12 +65,6 @@ if (heroVisual && currentPage === 'home') {
       position: 'center center',
       size: 'contain',
     },
-    {
-      image: 'pictures/IMG_7204.jpeg',
-      caption: 'At SISDSA 2026 seminar, Jadavpur University.',
-      position: 'center center',
-      size: 'cover',
-    },
   ];
   let activeHeroSlide = 0;
 
@@ -149,18 +143,17 @@ if (currentPage === 'gallery') {
 document.querySelector('#year').textContent = new Date().getFullYear();
 document.querySelector('.progress-footer span:last-child')?.remove();
 
-const firstInternship = document.querySelector('.internship-project:not(.dense-coding-project)');
+const firstInternship = document.querySelector('.internship-project:not(.dense-coding-project):not(.qst-project)');
 const fellowshipLink = firstInternship?.querySelector('.fellowship-link');
 const firstAbstractLink = firstInternship?.querySelector('.project-links a:last-child');
-if (firstAbstractLink) {
-  firstAbstractLink.href = 'https://drive.google.com/uc?export=download&id=1TAzVu03wXdVtlFovLBMcXA1WIsv2ABNn';
-}
+firstAbstractLink?.remove();
 if (firstInternship) {
   firstInternship.querySelectorAll('p').forEach((paragraph) => {
     if (paragraph.textContent.trim() === 'Bose Institute, Kolkata') {
       paragraph.remove();
     } else if (paragraph.textContent.startsWith('Supervisor: ')) {
       paragraph.textContent = paragraph.textContent.replace('Supervisor:', 'Advisor:');
+      paragraph.classList.add('advisor-note');
     }
   });
 }
@@ -176,13 +169,25 @@ if (projectGrid) {
   const institutionLogos = document.createElement('div');
   institutionLogos.className = 'internship-institution-logos';
   [
-    { src: 'pictures/IISERB_logo.png', alt: 'IISER Bhopal logo' },
-    { src: 'pictures/bose%20inst.png', alt: 'Bose Institute logo' },
-  ].forEach(({ src, alt }) => {
-    const logo = document.createElement('img');
-    logo.src = src;
-    logo.alt = alt;
-    institutionLogos.append(logo);
+    [
+      { src: 'pictures/hriallahabad_logo.jpg', alt: 'Harish-Chandra Research Institute logo' },
+      { src: 'pictures/dae.jpg', alt: 'Department of Atomic Energy logo' },
+      { src: 'pictures/IISER-K_Logo.svg', alt: 'IISER Kolkata logo' },
+    ],
+    [
+      { src: 'pictures/IISERB_logo.png', alt: 'IISER Bhopal logo' },
+      { src: 'pictures/bose%20inst.png', alt: 'Bose Institute logo' },
+    ],
+  ].forEach((row) => {
+    const logoRow = document.createElement('div');
+    logoRow.className = 'internship-institution-logo-row';
+    row.forEach(({ src, alt }) => {
+      const logo = document.createElement('img');
+      logo.src = src;
+      logo.alt = alt;
+      logoRow.append(logo);
+    });
+    institutionLogos.append(logoRow);
   });
   projectGrid.after(institutionsNote, institutionLogos);
   const scholarlyCard = document.createElement('article');
@@ -196,11 +201,18 @@ if (projectGrid) {
   const workshopHeading = document.createElement('h3');
   workshopHeading.className = 'scholarly-heading workshop-heading';
   workshopHeading.textContent = 'Attended workshops and courses';
-  secondScholarlyCard.after(workshopHeading);
+  const workshopDropdown = document.createElement('details');
+  workshopDropdown.className = 'workshop-dropdown';
+  const workshopSummary = document.createElement('summary');
+  workshopSummary.className = 'workshop-summary';
+  workshopSummary.innerHTML = '<span class="workshop-summary-copy"><span class="workshop-summary-note">Co-curricular Trainings</span></span><span class="workshop-count"></span><span class="workshop-chevron" aria-hidden="true">↘</span>';
   const workshopCard = document.createElement('article');
   workshopCard.className = 'workshop-card';
-  workshopCard.innerHTML = '<span class="scholarly-card-index">Learning record</span><ol class="workshop-list" reversed><li>CERN-MPQ-UIBK School on Quantum Simulation of Fundamental Physics, 17 August to 4 September 2026</li><li>Introduction to Quantum Computing in Fluid Dynamics (STO-AVT-377), 06-10 July 2026, Von-Karmann Institute for Fluid Dynamics, Belgium</li><li>International Workshop on Nano-photonics using structured light, IISER Kolkata and University at Buffalo, SPARC, 7 March 2026 <a href="https://drive.google.com/uc?export=download&amp;id=1uOrKydeN2anYDa1a1ZPAUAngxF0hprEo" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Workshop on Quantum Computing and Quantum Key Distribution (QKD), IIT Delhi, 27 February 2026 to 1 March 2026 <a href="https://drive.google.com/uc?export=download&amp;id=1TL8kjZkPKYqeoUk7mt9nnWZ4h8DkPc3u" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Familiarisation workshop on Quantum Computing, Foundation for QC Innovations, IISc, India, 2026 <a href="https://drive.google.com/uc?export=download&amp;id=1WVQtCkAq4JrkASNk-tq-9vaVKKrF60OO" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Workshop on Quantum Computing and Algorithms, IIT Kharagpur, India, 31 January and 1 February 2026 <a href="https://drive.google.com/uc?export=download&amp;id=1LOt6r0R2hUTHvXDmhl740sPYz4gOO94r" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Summer School on Correlated Quantum Materials &amp; Solid-State Quantum Systems 2025, Julius-Maximilians-Universitat Wurzburg, 15–19 September 2025</li><li>INUP-i2i online familiarization workshop on nanofabrication &amp; characterisation- IIT KGP- 2025 <a href="https://drive.google.com/uc?export=download&amp;id=1IqakSE80kBtRvirf6UG0MSezLZISpIji" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>QuCAM (Quantum Computing-Circuits, Algorithms, &amp; Machine Learning) Workshop, NIT Rourkela, India, 2025</li><li>Introductory Course on Quantum Computing, IISER Pune, India, 2024–25 <a href="https://drive.google.com/uc?export=download&amp;id=1sgIMb-mWTsk6QFnRIglUeTgSHb6mNWAt" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>AI Winter School, Centre for Fundamental Physics of the Universe, Brown University, USA, 2025 <a href="https://drive.google.com/uc?export=download&amp;id=1ORo3sxO7IakUHW4bqKJBtPJqxbwnikIp" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Winter School on Semiconductor Technology, CeNSE, IISc, India, 2024 <a href="https://drive.google.com/uc?export=download&amp;id=1SZiUrxu9o2Ie2XDfJy9m4O4ctlaH4kSJ" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Workshop on Classical and Quantum Machine Learning for Condensed Matter Physics, ICTP-Italy, 2024 <a href="https://drive.google.com/uc?export=download&amp;id=1ERSvCGcr1wE6zF4m50vy1_SHyIbEuXgu" target="_blank" rel="noopener noreferrer">Invitation letter ↗</a></li></ol>';
+  workshopCard.innerHTML = '<ol class="workshop-list" reversed><li>CERN-MPQ-UIBK School on Quantum Simulation of Fundamental Physics, 17 August to 4 September 2026</li><li>Introduction to Quantum Computing in Fluid Dynamics (STO-AVT-377), 06-10 July 2026, Von-Karmann Institute for Fluid Dynamics, Belgium</li><li>International Workshop on Nano-photonics using structured light, IISER Kolkata and University at Buffalo, SPARC, 7 March 2026 <a href="https://drive.google.com/uc?export=download&amp;id=1uOrKydeN2anYDa1a1ZPAUAngxF0hprEo" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Workshop on Quantum Computing and Quantum Key Distribution (QKD), IIT Delhi, 27 February 2026 to 1 March 2026 <a href="https://drive.google.com/uc?export=download&amp;id=1TL8kjZkPKYqeoUk7mt9nnWZ4h8DkPc3u" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Familiarisation workshop on Quantum Computing, Foundation for QC Innovations, IISc, India, 2026 <a href="https://drive.google.com/uc?export=download&amp;id=1WVQtCkAq4JrkASNk-tq-9vaVKKrF60OO" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Workshop on Quantum Computing and Algorithms, IIT Kharagpur, India, 31 January and 1 February 2026 <a href="https://drive.google.com/uc?export=download&amp;id=1LOt6r0R2hUTHvXDmhl740sPYz4gOO94r" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Summer School on Correlated Quantum Materials &amp; Solid-State Quantum Systems 2025, Julius-Maximilians-Universitat Wurzburg, 15–19 September 2025</li><li>INUP-i2i online familiarization workshop on nanofabrication &amp; characterisation- IIT KGP- 2025 <a href="https://drive.google.com/uc?export=download&amp;id=1IqakSE80kBtRvirf6UG0MSezLZISpIji" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>QuCAM (Quantum Computing-Circuits, Algorithms, &amp; Machine Learning) Workshop, NIT Rourkela, India, 2025</li><li>Introductory Course on Quantum Computing, IISER Pune, India, 2024–25 <a href="https://drive.google.com/uc?export=download&amp;id=1sgIMb-mWTsk6QFnRIglUeTgSHb6mNWAt" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>AI Winter School, Centre for Fundamental Physics of the Universe, Brown University, USA, 2025 <a href="https://drive.google.com/uc?export=download&amp;id=1ORo3sxO7IakUHW4bqKJBtPJqxbwnikIp" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Winter School on Semiconductor Technology, CeNSE, IISc, India, 2024 <a href="https://drive.google.com/uc?export=download&amp;id=1SZiUrxu9o2Ie2XDfJy9m4O4ctlaH4kSJ" target="_blank" rel="noopener noreferrer">Certificate ↗</a></li><li>Workshop on Classical and Quantum Machine Learning for Condensed Matter Physics, ICTP-Italy, 2024 <a href="https://drive.google.com/uc?export=download&amp;id=1ERSvCGcr1wE6zF4m50vy1_SHyIbEuXgu" target="_blank" rel="noopener noreferrer">Invitation letter ↗</a></li></ol>';
   const workshopList = workshopCard.querySelector('.workshop-list');
+  workshopList.id = 'workshop-list';
+  workshopSummary.setAttribute('aria-controls', workshopList.id);
+  workshopSummary.querySelector('.workshop-count').textContent = `${workshopList.children.length} entries`;
   workshopCard.querySelectorAll('.workshop-list a').forEach((link) => {
     const label = link.textContent.replace(/↗/g, '').replace(/\s+/g, ' ').trim() || 'Certificate';
     link.textContent = label;
@@ -208,28 +220,13 @@ if (projectGrid) {
     arrow.textContent = '↗';
     link.append(arrow);
   });
-  workshopHeading.after(workshopCard);
+  workshopDropdown.append(workshopSummary, workshopCard);
+  secondScholarlyCard.after(workshopHeading, workshopDropdown);
 }
 const fellowshipParagraph = fellowshipLink?.parentElement;
 if (fellowshipLink && fellowshipParagraph) {
-  const fellowshipLabel = fellowshipParagraph.firstChild?.textContent.trim();
-  fellowshipParagraph.textContent = '';
-  fellowshipLink.textContent = '';
-  const arrow = document.createElement('span');
-  arrow.textContent = '↗';
-  fellowshipLink.append(arrow, fellowshipLabel);
-  fellowshipParagraph.append(fellowshipLink);
-
-  const selectedFellowsLink = document.createElement('a');
-  const selectedFellowsArrow = document.createElement('span');
-  selectedFellowsLink.className = 'fellowship-link';
-  selectedFellowsLink.href = 'https://webjapps.ias.ac.in/fellowship2025/lists/result.jsp';
-  selectedFellowsLink.target = '_blank';
-  selectedFellowsLink.rel = 'noopener noreferrer';
-  selectedFellowsLink.textContent = '2025 selected fellows list';
-  selectedFellowsArrow.textContent = '↗';
-  selectedFellowsLink.prepend(selectedFellowsArrow);
-  fellowshipParagraph.append(' ', selectedFellowsLink);
+  fellowshipParagraph.classList.add('fellowship-sponsor-note');
+  fellowshipParagraph.textContent = 'Jointly sponsored by IASc-INSA-NASI';
 }
 
 const denseCodingProject = document.querySelector('.dense-coding-project');
@@ -247,6 +244,9 @@ if (denseCodingProject) {
   const projectLinks = denseCodingProject.querySelector('.project-links');
   projectDetails.forEach((detail) => {
     const paragraph = document.createElement('p');
+    if (detail.text.startsWith('Advisor:')) {
+      paragraph.classList.add('advisor-note');
+    }
     if (detail.href) {
       const link = document.createElement('a');
       const arrow = document.createElement('span');
@@ -266,7 +266,6 @@ if (denseCodingProject) {
   projectLinks.innerHTML = '';
   [
     { text: 'ResearchGate / DOI:', href: 'https://doi.org/10.13140/RG.2.2.36663.69287', doi: '10.13140/RG.2.2.36663.69287' },
-    { text: 'Abstract', href: 'https://drive.google.com/uc?export=download&id=1lN1e0CgsVIQinrAwoWZuRREQeIPN40Sg' },
   ].forEach((resource) => {
     const link = document.createElement('a');
     const arrow = document.createElement('span');
