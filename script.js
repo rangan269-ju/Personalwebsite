@@ -155,12 +155,36 @@ const firstAbstractLink = firstInternship?.querySelector('.project-links a:last-
 if (firstAbstractLink) {
   firstAbstractLink.href = 'https://drive.google.com/uc?export=download&id=1TAzVu03wXdVtlFovLBMcXA1WIsv2ABNn';
 }
+if (firstInternship) {
+  firstInternship.querySelectorAll('p').forEach((paragraph) => {
+    if (paragraph.textContent.trim() === 'Bose Institute, Kolkata') {
+      paragraph.remove();
+    } else if (paragraph.textContent.startsWith('Supervisor: ')) {
+      paragraph.textContent = paragraph.textContent.replace('Supervisor:', 'Advisor:');
+    }
+  });
+}
 const projectGrid = document.querySelector('.work .project-entry-grid');
 if (projectGrid) {
   const scholarlyHeading = document.createElement('h3');
   scholarlyHeading.className = 'scholarly-heading';
   scholarlyHeading.textContent = 'Scholarly work';
   projectGrid.after(scholarlyHeading);
+  const institutionsNote = document.createElement('p');
+  institutionsNote.className = 'internship-institutions-note';
+  institutionsNote.textContent = 'The above works were carried out during my visit to the following institutions as part of various prestigious summer research programs.';
+  const institutionLogos = document.createElement('div');
+  institutionLogos.className = 'internship-institution-logos';
+  [
+    { src: 'pictures/IISERB_logo.png', alt: 'IISER Bhopal logo' },
+    { src: 'pictures/bose%20inst.png', alt: 'Bose Institute logo' },
+  ].forEach(({ src, alt }) => {
+    const logo = document.createElement('img');
+    logo.src = src;
+    logo.alt = alt;
+    institutionLogos.append(logo);
+  });
+  projectGrid.after(institutionsNote, institutionLogos);
   const scholarlyCard = document.createElement('article');
   scholarlyCard.className = 'scholarly-card';
   scholarlyCard.innerHTML = '<span class="scholarly-card-index">02</span><h3>Superdense Coding Protocol in Maximally and Non-maximally Entangled Bell State: An Experimental Realisation</h3><p>Published in <em>Abstract Book: Scientific Innovation and Skill Development for Societal Advancement</em></p><p>Innovation &amp; Skill Development Research Centre, Jadavpur University, India · 2026</p><a class="scholarly-card-link" href="https://doi.org/10.13140/RG.2.2.22746.91843" target="_blank" rel="noopener noreferrer" aria-label="Open ResearchGate DOI"><span>↗</span> ResearchGate / DOI: <span class="doi-number">10.13140/RG.2.2.22746.91843</span></a><a class="scholarly-card-link" href="https://drive.google.com/uc?export=download&amp;id=1ToPfW1x9e7QYZ5J9rGE3fAvibrJyEWTS" aria-label="Download abstract"><span>↗</span> Abstract</a><a class="scholarly-card-link" href="https://drive.google.com/uc?export=download&amp;id=1eJ5AMMzWMnt3Mb0F7u2ODuxFsIbAxwHX" aria-label="Download poster"><span>↗</span> Poster</a>';
@@ -217,8 +241,7 @@ if (denseCodingProject) {
     }
   });
   const projectDetails = [
-    { text: 'Supervisor: Dr. Kuntal Roy' },
-    { text: 'Indian Institute of Science Education & Research Bhopal' },
+    { text: 'Advisor: Dr. Kuntal Roy' },
     { text: 'IISERB Summer Internship Program 2026', href: 'https://www.iiserb.ac.in/doaa/internship' },
   ];
   const projectLinks = denseCodingProject.querySelector('.project-links');
@@ -279,6 +302,36 @@ internshipCards.forEach(({ id, card }) => {
   heading.replaceChildren(link);
 });
 
+function appendInternshipReferences(detailPage, references) {
+  const referencesHeading = document.createElement('h2');
+  const referencesList = document.createElement('ol');
+  referencesHeading.className = 'internship-references-heading';
+  referencesHeading.textContent = 'References';
+  referencesList.className = 'internship-references';
+  references.forEach((reference) => {
+    const item = document.createElement('li');
+    let cursor = 0;
+    for (const match of reference.matchAll(/https?:\/\/[^\s;]+/g)) {
+      const rawUrl = match[0];
+      const url = rawUrl.replace(/[.,]+$/, '');
+      const urlIndex = match.index;
+      const link = document.createElement('a');
+      if (urlIndex > cursor) {
+        item.append(document.createTextNode(reference.slice(cursor, urlIndex)));
+      }
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = url;
+      item.append(link, document.createTextNode(rawUrl.slice(url.length)));
+      cursor = urlIndex + rawUrl.length;
+    }
+    item.append(document.createTextNode(reference.slice(cursor)));
+    referencesList.append(item);
+  });
+  detailPage.append(referencesHeading, referencesList);
+}
+
 const selectedInternship = internshipCards.find(({ id }) => id === requestedInternship)?.card;
 if (currentPage === 'experience' && selectedInternship && projectGrid) {
   const title = selectedInternship.querySelector('h3')?.textContent;
@@ -292,11 +345,104 @@ if (currentPage === 'experience' && selectedInternship && projectGrid) {
   detailTitle.className = 'internship-detail-title';
   detailTitle.textContent = title;
   detailPage.append(backLink, detailTitle);
+  if (selectedInternship === firstInternship) {
+    const detailNote = document.createElement('div');
+    detailNote.className = 'internship-detail-note';
+
+    const fundamentalsParagraph = document.createElement('p');
+    fundamentalsParagraph.textContent = 'The project primarily focuses on understanding, implementing, and testing some of the most important concepts and algorithms in quantum computing. The work consists of the basics of qubits, Hilbert spaces, and quantum gates, which form the foundation of quantum computation. With these building blocks, key algorithms such as the Deutsch, Deutsch–Jozsa (DJ), and Bernstein–Vazirani (BV) algorithms were studied in detail. These algorithms were chosen because they show how quantum systems can outperform classical ones by using superposition, entanglement, and parallelism.';
+
+    const hardwareParagraph = document.createElement('p');
+    const platformLink = document.createElement('a');
+    platformLink.href = 'https://quantum.cloud.ibm.com/';
+    platformLink.target = '_blank';
+    platformLink.rel = 'noopener noreferrer';
+    platformLink.textContent = 'IBM Quantum Platform';
+    hardwareParagraph.append(
+      document.createTextNode('The project goes beyond theory by using Qiskit to simulate quantum circuits and execute them on real IBM quantum computers, namely IBM-Brisbane (Qubits 127; QPU version-1.1.202; Processor type- Eagle r3; Basis gates- ecr, id, rz, sx, x; Median readout error 2.136E-2) and IBM-Torino (Qubits 133; QPU version 1.0.90; Processor type- Heron r1; Basis gates- cz, id, rx, rz, rzz, sx, x; Median readout error 3.223E-2). For more information, visit the '),
+      platformLink,
+      document.createTextNode('. Several gates, including the X, NOT, CNOT, and Hadamard gates were experimentally tested. Their outputs were verified against theoretical expectations, giving confidence in both the simulator and hardware. Experiments also explored entanglement and quantum parallelism, showing how qubits can be correlated and functions can be evaluated across many inputs at once.'),
+    );
+
+    const algorithmsParagraph = document.createElement('p');
+    algorithmsParagraph.textContent = 'The algorithms were implemented using different oracle types (including both constant and balanced types). On simulators, results were ideal, while on real IBM Quantum devices, small deviations due to noise and various gate errors were observed. A stability study compared IBM-Brisbane and IBM-Torino QCs, showing both are reliable but with slight performance differences.';
+
+    const faultStudyParagraph = document.createElement('p');
+    faultStudyParagraph.textContent = 'A major part of the project examined faults in the Hadamard gate, focusing on coherent phase flip errors. Theoretical calculations and Bloch sphere representations were carried out, followed by experiments to detect faulty gates. Distinct patterns in output states served as clear indicators of such faults. A generalized faulty Hadamard gate with a tunable parameter θ was also studied, and fidelity calculations quantified how close faulty outputs were to the ideal case.';
+
+    detailNote.append(fundamentalsParagraph, hardwareParagraph, algorithmsParagraph, faultStudyParagraph);
+    detailPage.append(detailNote);
+    const detailImages = [
+      { src: 'pictures/heatmap%20faulty.png', alt: 'Heatmap of faulty quantum gate results' },
+      { src: 'pictures/ibmqcstabo4.png', alt: 'IBM Quantum Composer circuit and results' },
+      { src: 'pictures/entanglement%20cityscape.png', alt: 'Entanglement cityscape visualization' },
+      { src: 'pictures/DJ.png', alt: 'Deutsch–Jozsa algorithm circuit and results' },
+    ];
+    const imageGallery = document.createElement('div');
+    imageGallery.className = 'internship-detail-images';
+    detailImages.forEach(({ src, alt }) => {
+      const image = document.createElement('img');
+      image.src = src;
+      image.alt = alt;
+      imageGallery.append(image);
+    });
+    detailPage.append(imageGallery);
+    appendInternshipReferences(detailPage, [
+      'D. Deutsch and R. Jozsa, “Rapid solution of problems by quantum computation,” Proceedings of the Royal Society of London A, vol. 439, no. 1907, pp. 553–558, 1992.',
+      'J. Preskill, “Lecture Notes for Physics 229: Quantum Computation and Information,” California Institute of Technology, 1998. Available at: http://theory.caltech.edu/~preskill/ph229/.',
+      'Hiu Yung Wong, Introduction to Quantum Computing: From a Layperson to a Programmer in 30 Steps, Springer Nature, 2022. ISBN: 978-9811900546.',
+      'M. A. Nielsen and I. L. Chuang, Quantum Computation and Quantum Information, Cambridge University Press, 2010.',
+      'Peter Marttala, An Extension of the Deutsch-Jozsa Algorithm to Arbitrary Qudits, University of Saskatchewan Saskatoon, SK S7N 5E2 Canada, July 2007.',
+      'Peter Shor, Deutsch-Jozsa Algorithm for 3 qubits. Available at: https://openlearninglibrary.mit.edu/courses/course-v1:MITx+8.370.2x+1T2018/courseware/Week2/lectures_U2_2_dj_qcirc/6?activate_block_id=block-v1%3AMITx%2B8.370.2x%2B1T2018%2Btype%40vertical%2Bblock%40Classical_algorithm_solving_Deutschs_problem.',
+      'Poornima Aradyamath, Naghabhushana N M, Rohitha Ujjinimatad, “Quantum Computing Concepts with Deutsch Jozsa Algorithm,” International Journal on Informatics Visualization, vol. 3, no. 1, 2019. e-ISSN: 2549-9904; ISSN: 2549-9610.',
+      'Gangopadhyay, S.; Manabputra; Behera, B. K.; Panigrahi, P. K., “Generalization and demonstration of an entanglement-based Deutsch-Jozsa-like algorithm using a 5-qubit quantum computer,” Quantum Information Processing, vol. 17, no. 7, p. 160.',
+      'Qiskit Contributors, “Qiskit: An Open-source Framework for Quantum Computing.” Available at: https://qiskit.org/, 2025.',
+      'IBM Quantum, “IBM Quantum Cloud Platform.” Available at: https://quantum.cloud.ibm.com/; https://research.ibm.com/quantum-computing, 2025.',
+    ]);
+  }
   if (selectedInternship === denseCodingProject) {
     const detailNote = document.createElement('p');
     detailNote.className = 'internship-detail-note';
     detailNote.textContent = 'Quantum communication protocols that rely on pre-shared entangled states can generally be divided into two broad categories according to their objectives - classical information transfer and quantum state transfer. Although quantum state transfer protocols have received significant attention, comparable efforts toward extending the practical applications of classical information transmission protocols using different multipartite entangled channels have received relatively limited attention in recent years. Most existing studies focus on proposing new entangled resources or evaluating protocol performance under ideal conditions, whereas comparatively fewer investigations address their practical implementation under realistic noisy environments. Furthermore, systematic comparisons among different entangled channels remain scarce. Therefore, in this work, a comprehensive comparative study of quantum dense coding protocols based on different entangled states is presented under both ideal and realistic noisy quantum environments. The protocols are first analyzed theoretically to evaluate various performance metrics. Their robustness is then investigated under realistic Pauli noise models. Finally, a systematic comparison is carried out to identify the strengths and limitations of different entangled channels using Qiskit. The results demonstrate that the analytical derivations are in exact agreement with the simulation results. Furthermore, different protocols exhibit varying levels of robustness under different Pauli noise models, while increasing circuit depth and gate complexity make the protocols more error-prone. Altogether, the presented results establish a comprehensive framework for assessing quantum dense coding protocols, thereby facilitating their practical implementation in future quantum communication networks.';
     detailPage.append(detailNote);
+    const detailImages = [
+      { src: 'pictures/QBER%20bitPHASE%20flip.png', alt: 'QBER for bit-phase flip noise' },
+      { src: 'pictures/Phase%20flip%20noise%20all%20channel.png', alt: 'Phase-flip noise results for all channels' },
+      { src: 'pictures/Bit%20flip%20noise%20all%20channel.png', alt: 'Bit-flip noise results for all channels' },
+      { src: 'pictures/orthogonality%20graph%2064.png', alt: '64-node orthogonality graph', className: 'orthogonality-graph' },
+    ];
+    const imageGallery = document.createElement('div');
+    imageGallery.className = 'internship-detail-images';
+    detailImages.forEach(({ src, alt, className }) => {
+      const image = document.createElement('img');
+      image.src = src;
+      image.alt = alt;
+      if (className) image.className = className;
+      imageGallery.append(image);
+    });
+    detailPage.append(imageGallery);
+
+    const references = [
+      'R. Horodecki, P. Horodecki, M. Horodecki, and K. Horodecki, “Quantum Entanglement,” Reviews of Modern Physics, vol. 81, pp. 865–942, 2009.',
+      'S. Das, T. Chanda, M. Lewenstein, A. Sanpera, A. Sen(De), and U. Sen, “The separability versus entanglement problem,” arXiv preprint, 2017.',
+      'B. C.H. and W. S.J., “Communication via One- and Two-Particle Operators on Einstein-Podolsky-Rosen States,” Phys. Rev. Lett., vol. 69, pp. 2881–2884, 1992.',
+      'N. M.A. and C. I.L., “Quantum Computation and Quantum Information,” Cambridge University Press, Cambridge, UK, 2010.',
+      'X. Tan, X. Li, and P. Yang, “Perfect quantum teleportation via bell states,” Computers, Materials & Continua, vol. 57, no. 3, pp. 495–503, 2018.',
+      'S. Ghosh, G. Kar, A. Roy, D. Sarkar, and U. Sen, “Entanglement teleportation through ghz-class states,” New Journal of Physics, vol. 4, pp. 48.1–48.9, 2002.',
+      'J. Joo, Y.-J. Park, S. Oh, and J. Kim, “Quantum teleportation via a w state,” New Journal of Physics, vol. 5, p. 136, 2003.',
+      'A. Pandey, “Quantum teleportation using w-bell and bell-ghz channels,” International Journal of Engineering, Science and Mathematics, vol. 13, Aug. 2024.',
+      'M. Anagha, A. Mohan, T. Muruganandan, B. K. Behera, and P. K. Panigrahi, “A new scheme of quantum teleportation using highly entangled brown et al. state: An ibm quantum experience,” Quantum Information Processing, vol. 19, p. 147, 2020.',
+      'D. Singh, S. Kumar, and B. K. Behera, “Complexity analysis of quantum teleportation via different entangled channels in the presence of noise,” IET Quantum Communication, vol. 3, no. 4, pp. 166–176, 2022.',
+      'M. Sisodia, A. Shukla, K. Thapliyal, and A. Pathak, “Design and experimental realization of an optimal scheme for teleportation of an n-qubit quantum state,” arXiv preprint, 2017.',
+      'A. S. Cacciapuoti, M. Caleffi, R. V. Meter, and L. Hanzo, “When entanglement meets classical communications: Quantum teleportation for the quantum internet,” IEEE Transactions on Communications, vol. 68, no. 6, pp. 3808–3833, 2020.',
+      'H.-J. Briegel, W. Dür, J. I. Cirac, and P. Zoller, “Quantum repeaters: The role of imperfect local operations in quantum communication,” Physical Review Letters, vol. 81, no. 26, pp. 5932–5935, 1998.',
+      'K. M. et al., “Dense coding in experimental quantum communication,” Physical Review Letters, vol. 76, pp. 4656–4659, 1996.',
+      'V. Sougato Bose and Knight, “Multiparticle generalization of quantum dense coding,” Physical Review A, vol. 57, pp. 822–829, 1998.',
+      'J.-C. H. et al., “Controlled dense coding using a four-particle ghz state,” Physical Review A, vol. 63, p. 054301, 2001.',
+      'S. Muralidharan and P. K. Panigrahi, “Perfect teleportation, quantum state sharing and superdense coding through a genuinely entangled five-qubit state,” Physical Review A, vol. 77, no. 3, p. 032321, 2008.',
+      'D. Saha and P. K. Panigrahi, “N-qubit quantum teleportation, information splitting and superdense coding through the composite ghz-bell channel,” arXiv preprint, 2011.',
+    ];
+    appendInternshipReferences(detailPage, references);
   }
   projectGrid.closest('.work')?.replaceChildren(detailPage);
   document.title = `${title} | Experiences`;
