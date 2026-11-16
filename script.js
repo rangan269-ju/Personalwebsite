@@ -10,6 +10,7 @@ const pageViews = {
   contact: ['.contact'],
 };
 const requestedPage = new URLSearchParams(window.location.search).get('page') || 'home';
+const requestedInternship = new URLSearchParams(window.location.search).get('internship');
 const currentPage = Object.prototype.hasOwnProperty.call(pageViews, requestedPage) ? requestedPage : 'home';
 const visibleViews = pageViews[currentPage];
 const profileViews = ['#education', '.work', '#qualification', '#publication'];
@@ -154,29 +155,6 @@ const firstAbstractLink = firstInternship?.querySelector('.project-links a:last-
 if (firstAbstractLink) {
   firstAbstractLink.href = 'https://drive.google.com/uc?export=download&id=1TAzVu03wXdVtlFovLBMcXA1WIsv2ABNn';
 }
-if (firstInternship) {
-  const gallery = document.createElement('div');
-  gallery.className = 'dense-coding-gallery first-internship-gallery';
-  [
-    {
-      src: 'pictures/heatmap%20faulty.png',
-      alt: 'Heatmap of faulty quantum gate results',
-    },
-    {
-      src: 'pictures/ibmqcstabo4.png',
-      alt: 'IBM Quantum Composer circuit and results',
-    },
-  ].forEach((imageDetails) => {
-    const figure = document.createElement('figure');
-    const image = document.createElement('img');
-    figure.className = 'dense-coding-figure';
-    image.src = imageDetails.src;
-    image.alt = imageDetails.alt;
-    figure.append(image);
-    gallery.append(figure);
-  });
-  firstInternship.querySelector('.project-links')?.after(gallery);
-}
 const projectGrid = document.querySelector('.work .project-entry-grid');
 if (projectGrid) {
   const scholarlyHeading = document.createElement('h3');
@@ -208,12 +186,6 @@ if (projectGrid) {
   });
   workshopHeading.after(workshopCard);
 }
-document.querySelectorAll('.internship-project').forEach((card) => {
-  const label = document.createElement('span');
-  label.className = 'internship-label';
-  label.textContent = 'A Project Internship on';
-  card.append(label);
-});
 const fellowshipParagraph = fellowshipLink?.parentElement;
 if (fellowshipLink && fellowshipParagraph) {
   const fellowshipLabel = fellowshipParagraph.firstChild?.textContent.trim();
@@ -290,27 +262,44 @@ if (denseCodingProject) {
     projectLinks.append(link);
   });
 
-  const gallery = document.createElement('div');
-  gallery.className = 'dense-coding-gallery';
-  [
-    {
-      src: 'pictures/6cluster%20bitphase%20flip%20ckt.png',
-      alt: 'Six-qubit circuit diagram for a bit-phase flip quantum communication protocol',
-    },
-    {
-      src: 'pictures/orthogonality%20graph%2064.png',
-      alt: '64-node orthogonality graph with densely connected vertices',
-    },
-  ].forEach((imageDetails) => {
-    const figure = document.createElement('figure');
-    const image = document.createElement('img');
-    figure.className = 'dense-coding-figure';
-    image.src = imageDetails.src;
-    image.alt = imageDetails.alt;
-    figure.append(image);
-    gallery.append(figure);
-  });
-  denseCodingProject.append(gallery);
+}
+
+const internshipCards = [
+  { id: 'bose', card: firstInternship },
+  { id: 'iiserb', card: denseCodingProject },
+];
+internshipCards.forEach(({ id, card }) => {
+  const heading = card?.querySelector('h3');
+  if (!heading) return;
+
+  const link = document.createElement('a');
+  link.className = 'internship-title-link';
+  link.href = `?page=experience&internship=${id}`;
+  link.textContent = heading.textContent;
+  heading.replaceChildren(link);
+});
+
+const selectedInternship = internshipCards.find(({ id }) => id === requestedInternship)?.card;
+if (currentPage === 'experience' && selectedInternship && projectGrid) {
+  const title = selectedInternship.querySelector('h3')?.textContent;
+  const detailPage = document.createElement('div');
+  const backLink = document.createElement('a');
+  const detailTitle = document.createElement('h1');
+  detailPage.className = 'internship-detail-page';
+  backLink.className = 'internship-detail-back';
+  backLink.href = '?page=experience';
+  backLink.textContent = '← Back to Experiences';
+  detailTitle.className = 'internship-detail-title';
+  detailTitle.textContent = title;
+  detailPage.append(backLink, detailTitle);
+  if (selectedInternship === denseCodingProject) {
+    const detailNote = document.createElement('p');
+    detailNote.className = 'internship-detail-note';
+    detailNote.textContent = 'Quantum communication protocols that rely on pre-shared entangled states can generally be divided into two broad categories according to their objectives - classical information transfer and quantum state transfer. Although quantum state transfer protocols have received significant attention, comparable efforts toward extending the practical applications of classical information transmission protocols using different multipartite entangled channels have received relatively limited attention in recent years. Most existing studies focus on proposing new entangled resources or evaluating protocol performance under ideal conditions, whereas comparatively fewer investigations address their practical implementation under realistic noisy environments. Furthermore, systematic comparisons among different entangled channels remain scarce. Therefore, in this work, a comprehensive comparative study of quantum dense coding protocols based on different entangled states is presented under both ideal and realistic noisy quantum environments. The protocols are first analyzed theoretically to evaluate various performance metrics. Their robustness is then investigated under realistic Pauli noise models. Finally, a systematic comparison is carried out to identify the strengths and limitations of different entangled channels using Qiskit. The results demonstrate that the analytical derivations are in exact agreement with the simulation results. Furthermore, different protocols exhibit varying levels of robustness under different Pauli noise models, while increasing circuit depth and gate complexity make the protocols more error-prone. Altogether, the presented results establish a comprehensive framework for assessing quantum dense coding protocols, thereby facilitating their practical implementation in future quantum communication networks.';
+    detailPage.append(detailNote);
+  }
+  projectGrid.closest('.work')?.replaceChildren(detailPage);
+  document.title = `${title} | Experiences`;
 }
 
 const graduationStart = new Date(2023, 7, 1);

@@ -11,7 +11,6 @@
 #skills .skill-details b::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 8px 1px 0; border: 1px solid #63d8d1; background: #63d8d1; box-sizing: border-box; }
 #skills .skills-grid .research-box:last-child .skill-details { justify-content: flex-start; gap: 20px; min-height: 0; }
 @media (max-width: 760px) { #skills .skills-grid { width: 100%; grid-template-columns: 1fr; gap: 14px; margin-top: 30px; } #skills .skills-grid .research-box { min-height: 0; } #skills .skill-details { min-height: 0; gap: 14px; } }
-.internship-project-image, .dense-coding-project::after { clip-path: inset(0 0 65% 0); }
 .scholarly-heading { margin: 24px 0 0; padding-top: 14px; border-top: 1px solid var(--line); color: #f0c978; font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .scholarly-card { position: relative; max-width: 760px; margin-top: 18px; padding: 28px 30px; border: 1px solid #46556b; border-left: 4px solid #e19063; border-radius: 6px; background: #202936; color: #f4ede5; box-shadow: 0 12px 28px rgba(8, 13, 22, .28); transform: translateY(0); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, filter .25s ease; animation: scholarlyCardIn .6s ease both; }.scholarly-card:hover { transform: translateY(-4px) scale(1.01); border-color: #6a7f9f; box-shadow: 0 18px 34px rgba(8, 13, 22, .4); filter: brightness(1.04); }
 @keyframes scholarlyCardIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -57,7 +56,6 @@ a { color: inherit; text-decoration: none; }
   .desktop-nav a, .mobile-nav a { color: #f4ede5; opacity: 1; }
   .site-header { -webkit-backface-visibility: hidden; }
   .internship-project, .dense-coding-project { overflow: visible; }
-  .internship-project-image, .dense-coding-project::after { top: -96px; }
   .dense-coding-project { padding-top: 112px; }
 }
 .section-pad { padding-left: 9.5vw; padding-right: 9.5vw; }
@@ -80,16 +78,18 @@ a { color: inherit; text-decoration: none; }
 .qualification-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: min(100%, 620px); margin-top: 30px; }.qualification-grid .research-box { min-height: 108px; }.qualification-grid .research-box strong { max-width: none; }.qualification-rank, .qualification-percentiles { color: #e19063; font-size: 11px; }.qualification-percentiles { display: block; font: 10px/1.5 var(--mono); white-space: nowrap; }
 .profile-section > .work { grid-column: 1 / -1; padding: 17px 0 0; border-top: 2px solid var(--ink); }
 .project-entry-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 30px; }.internship-project { min-height: 0; }.internship-project h3 { max-width: none; margin: 18px 0 14px; font: 600 16px/1.35 var(--sans); }.internship-project p { margin: 5px 0 0; color: var(--muted); font: 11px/1.5 var(--mono); text-transform: uppercase; }
-.internship-project { position: relative; overflow: visible; padding: 24px; border: 0; border-left: 5px solid #e2b35d; border-radius: 2px 2px 0 0; outline: 0; background: #163b45; box-shadow: 10px 10px 0 rgba(8, 30, 36, .28); }.internship-project::before { content: ""; position: absolute; z-index: 1; top: -12px; left: 24px; width: 150px; height: 12px; border-radius: 4px 4px 0 0; background: #1d4a56; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 4px -2px 0 rgba(8, 30, 36, .08); }.internship-project::after { display: none; }.internship-project .research-box-index { color: #f0c978; }.internship-project h3 { margin-top: 14px; color: #f4ede5; font: 600 22px/1.2 var(--serif); letter-spacing: 0; }.internship-project p { color: #b9d0d0; font-family: var(--sans); font-size: 12px; text-transform: none; }.internship-project-image { position: absolute; z-index: 2; top: -128px; right: 32px; width: 210px; height: 268px; object-fit: cover; clip-path: inset(0 0 50% 0); transform: rotate(2deg); border: 8px solid #f4ede5; box-shadow: 8px 10px 0 rgba(8, 30, 36, .3); }
+.internship-project { position: relative; overflow: visible; padding: 24px; border: 0; border-left: 5px solid #e2b35d; border-radius: 2px 2px 0 0; outline: 0; background: #163b45; box-shadow: 10px 10px 0 rgba(8, 30, 36, .28); }.internship-project::before { content: ""; position: absolute; z-index: 1; top: -12px; left: 24px; width: 150px; height: 12px; border-radius: 4px 4px 0 0; background: #1d4a56; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 4px -2px 0 rgba(8, 30, 36, .08); }.internship-project .research-box-index { color: #f0c978; }.internship-project h3 { margin-top: 14px; color: #f4ede5; font: 600 22px/1.2 var(--serif); letter-spacing: 0; }.internship-project p { color: #b9d0d0; font-family: var(--sans); font-size: 12px; text-transform: none; }
 .project-links { display: grid; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #416a73; }.project-links a { display: inline-flex; align-items: center; gap: 10px; width: fit-content; color: #f0c978; font: 11px var(--mono); text-transform: uppercase; }.project-links a span { color: #f4ede5; font-size: 16px; transition: transform .2s; }.project-links a:hover span { transform: translate(3px, -3px); }
 .project-links a .doi-number { color: #8fd0ca; font: 10px var(--mono); letter-spacing: .06em; text-transform: none; }.project-links a:hover .doi-number { transform: none; }
 .internship-project .project-timeline { margin-top: -7px; color: #f0c978; font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .fellowship-link { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; color: #b9d0d0; font: 12px/1.5 var(--sans); }.fellowship-link span { display: inline-block; color: #f0c978; font-size: 16px; transition: transform .2s ease; }.fellowship-link:hover span { transform: translate(3px, -3px); }
 .internship-detail-link { display: inline-flex; align-items: center; gap: 7px; color: #b9d0d0; }.internship-detail-link span { color: #f0c978; font-size: 16px; transition: transform .2s; }.internship-detail-link:hover span { transform: translate(3px, -3px); }
-.dense-coding-project { order: -1; padding-top: 24px; }.dense-coding-project h3 { margin-top: 14px; }.dense-coding-project::before { left: 24px; }.dense-coding-project::after { content: ""; display: block; position: absolute; z-index: 2; top: -128px; right: 32px; width: 210px; height: 268px; background: url("pictures/iiserb.png") center/cover; clip-path: inset(0 0 50% 0); transform: rotate(2deg); border: 8px solid #f4ede5; border-radius: 0; box-shadow: 8px 10px 0 rgba(8, 30, 36, .3); }
-@media (max-width: 760px) { .project-entry-grid { grid-template-columns: 1fr; gap: 38px; }.internship-project::before { left: 16px; width: 112px; }.internship-project-image { top: -82px; right: 20px; width: 135px; height: 172px; border-width: 5px; }.dense-coding-project::after { top: -82px; right: 20px; width: 135px; height: 172px; clip-path: inset(0 0 50% 0); border-width: 5px; border-radius: 0; } }
-.internship-project, .dense-coding-project { padding-top: 48px; }.internship-label { position: absolute; z-index: 3; top: 10px; left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100% - 28px); padding: 4px 8px; border: 1px solid #e2b35d; background: #163b45; color: #f0c978; font: 9px var(--mono); letter-spacing: .06em; text-align: center; text-transform: uppercase; }.internship-project h3 { font-family: var(--mono); font-size: 15px; line-height: 1.45; letter-spacing: .02em; text-transform: uppercase; }.internship-project p { font-family: var(--mono); font-size: 11px; letter-spacing: .02em; }
-@media (max-width: 760px) { .internship-project, .dense-coding-project { padding-top: 44px; }.internship-label { top: 8px; max-width: calc(100% - 20px); padding: 4px 6px; font-size: 7px; } }
+.dense-coding-project { order: -1; padding-top: 24px; }.dense-coding-project h3 { margin-top: 14px; }.dense-coding-project::before { left: 24px; }
+@media (max-width: 760px) { .project-entry-grid { grid-template-columns: 1fr; gap: 38px; }.internship-project::before { left: 16px; width: 112px; } }
+.internship-project h3 { font-family: var(--mono); font-size: 15px; line-height: 1.45; letter-spacing: .02em; text-transform: uppercase; }.internship-project p { font-family: var(--mono); font-size: 11px; letter-spacing: .02em; }
+.internship-title-link { text-decoration: underline; text-decoration-color: var(--green); text-underline-offset: .2em; }.internship-title-link:hover, .internship-title-link:focus-visible { color: var(--green); }
+.internship-detail-page { width: min(100%, 900px); margin: 0 auto; padding: 32px 0; }.internship-detail-back { display: inline-block; margin-bottom: 24px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; color: var(--green); font: 11px var(--mono); }.internship-detail-back:hover, .internship-detail-back:focus-visible { border-color: var(--green); background: rgba(79, 211, 183, .08); }.internship-detail-title { margin: 0; color: var(--ink); font: 600 clamp(20px, 2.6vw, 30px)/1.3 var(--serif); }
+.internship-detail-note { max-width: 860px; margin: 24px 0 0; color: var(--muted); font: 14px/1.8 var(--sans); }
 @media (max-width: 760px) { .site-header { height: 70px; min-height: 70px; padding: 0 6vw; align-items: center; } }
 @media (max-width: 760px) { .education-progress { margin-top: 28px; border: 1px solid var(--line); padding: 18px; background: #481c25; }.progress-heading, .progress-footer { display: flex; justify-content: space-between; gap: 10px; font: 9px var(--mono); text-transform: uppercase; }.progress-heading strong { color: #e19063; font-weight: 400; }.progress-track { height: 8px; margin: 18px 0 10px; background: #6c4149; overflow: hidden; }.progress-fill { display: block; width: 75%; height: 100%; background: #e19063; }.progress-footer { color: var(--muted); font-size: 8px; }.progress-footer span:nth-child(2) { color: var(--ink); } }
 @media (min-width: 761px) { .site-header { height: 84px; min-height: 84px; padding: 0 6.5vw; align-items: center; }.desktop-nav { flex-direction: row; align-items: center; gap: 25px; }.profile-section { grid-template-columns: minmax(0, 1fr); column-gap: 0; } }
@@ -153,9 +153,7 @@ a { color: inherit; text-decoration: none; }
 .internship-project::before { display: none; }
 .internship-project h3 { color: var(--ink); font-family: var(--sans); font-size: 18px; font-weight: 600; letter-spacing: 0; text-transform: none; }
 .internship-project p { color: var(--muted); font-family: var(--sans); font-size: 13px; letter-spacing: 0; }
-.internship-project .project-timeline, .internship-project .research-box-index, .internship-label { color: var(--yellow); }
-.internship-label { border-color: #526342; border-radius: 999px; background: #29332d; font-family: var(--sans); font-size: 10px; letter-spacing: 0; text-transform: none; }
-.internship-project-image, .dense-coding-project::after { border-radius: 6px; box-shadow: 0 8px 24px rgba(0, 0, 0, .28); }
+.internship-project .project-timeline, .internship-project .research-box-index { color: var(--yellow); }
 .project-links { border-color: var(--line); }
 .project-links a, .fellowship-link, .internship-detail-link { color: var(--green); }
 .project-links a .doi-number { color: #92ded1; }
@@ -188,8 +186,6 @@ a { color: inherit; text-decoration: none; }
 .gallery-item a:hover img { transform: scale(1.035); }
 .gallery-item figcaption { padding: 12px 14px 14px; color: var(--ink); font: 500 12px/1.45 var(--sans); }
 .gallery-diagram img { object-fit: contain; padding: 10px; background: #f4f7f5; }
-.internship-project:not(.dense-coding-project) { padding-top: 24px; }
-.internship-project:not(.dense-coding-project) > .internship-project-image { display: none; }
 
 @media (max-width: 760px) {
   .section-pad { padding-left: 6vw; padding-right: 6vw; }
@@ -214,20 +210,7 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 440px) { .gallery-grid { grid-template-columns: 1fr; } }
 
 #research, #skills { display: none !important; }
-.dense-coding-project::after { display: none; }
 .project-entry-grid { align-items: start; }
-.dense-coding-gallery { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: start; gap: 12px; margin-top: 18px; }
-.dense-coding-figure { width: 100%; margin: 0; overflow: hidden; border: 1px solid rgba(200, 243, 106, .25); border-radius: 8px; background: #f4f7f5; box-shadow: 0 12px 30px rgba(0, 0, 0, .24); transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
-.dense-coding-figure:hover { transform: translateY(-3px); border-color: var(--yellow); box-shadow: 0 18px 38px rgba(0, 0, 0, .32); }
-.dense-coding-figure img { display: block; width: 100%; height: auto; background: #fff; }
-.dense-coding-figure:first-child { width: 100%; }
-.dense-coding-figure:first-child img { aspect-ratio: 1320 / 464; object-fit: contain; }
-.dense-coding-figure:last-child { width: 100%; }
-.dense-coding-figure:last-child img { transform: scale(1.22); }
-.first-internship-figure { width: min(100%, 340px); justify-self: center; margin-top: 18px; }
-.first-internship-figure img { aspect-ratio: auto; object-fit: contain; }
-.first-internship-gallery .dense-coding-figure img { aspect-ratio: auto; object-fit: contain; transform: none; }
-@media (max-width: 420px) { .dense-coding-gallery { grid-template-columns: 1fr; } .dense-coding-figure:first-child, .dense-coding-figure:last-child { width: min(100%, 300px); justify-self: center; } }
 @media (prefers-reduced-motion: reduce) { .hero-visual.is-changing { animation: none; } }
 
 @media (max-width: 760px) {
