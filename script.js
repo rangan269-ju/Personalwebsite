@@ -101,7 +101,7 @@ function setupGalleryCarousel(visual, slides) {
     visual.classList.toggle('show-full-image', Boolean(slide.fullImage));
     visual.classList.add('is-changing');
     window.setTimeout(() => visual.classList.remove('is-changing'), 700);
-  }, 4500);
+  }, 6000);
 }
 
 if (currentPage === 'gallery') {
@@ -165,7 +165,7 @@ if (projectGrid) {
   projectGrid.after(scholarlyHeading);
   const institutionsNote = document.createElement('p');
   institutionsNote.className = 'internship-institutions-note';
-  institutionsNote.textContent = 'The above works were carried out during my visit to the following institutions as part of various prestigious summer research programs.';
+  institutionsNote.textContent = 'The above works were carried out during my visit to the following institutions as part of various prestigious visiting and summer research programs.';
   const institutionLogos = document.createElement('div');
   institutionLogos.className = 'internship-institution-logos';
   [
@@ -239,7 +239,7 @@ if (denseCodingProject) {
   });
   const projectDetails = [
     { text: 'Advisor: Dr. Kuntal Roy' },
-    { text: 'IISERB Summer Internship Program 2026', href: 'https://www.iiserb.ac.in/doaa/internship' },
+    { text: 'IISERB SIP 2026', href: 'https://www.iiserb.ac.in/doaa/internship' },
   ];
   const projectLinks = denseCodingProject.querySelector('.project-links');
   projectDetails.forEach((detail) => {
